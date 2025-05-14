@@ -570,3 +570,14 @@ limit_right = 359
 limit_bottom = 279
 
 [node name="Inv_UI" parent="." instance=ExtResource("4_dqkch")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -44.0
+offset_top = -76.0
+offset_right = -4.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 2
