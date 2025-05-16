@@ -5,10 +5,10 @@ extends StaticBody2D
 func _ready() -> void:
 	fallfromtree()
 	
-
 func fallfromtree():
-	$AnimationPlayer.play("fallingfromtree")
+	$AnimationPlayer.play("fall_from_tree")
 	await get_tree().create_timer(1.5).timeout
+	
 	$AnimationPlayer.play("fade")
 	print("+1 apple")
 	await get_tree().create_timer(0.3).timeout

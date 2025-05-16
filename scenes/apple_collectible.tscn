@@ -1,7 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://fwrl2fln44k5"]
+[gd_scene load_steps=9 format=3 uid="uid://dwvvu31pse7l7"]
 
 [ext_resource type="Texture2D" uid="uid://y65jy8dpss3a" path="res://art/environment/apple-icon.png" id="1_7wuw0"]
-[ext_resource type="Script" uid="uid://c0fs8hg7meyxw" path="res://scripts/apple_collectible.gd" id="1_436tr"]
+[ext_resource type="Script" uid="uid://chgdo6cuctn10" path="res://scripts/apple_collectible.gd" id="1_436tr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_436tr"]
 atlas = ExtResource("1_7wuw0")
@@ -18,47 +18,7 @@ animations = [{
 "speed": 0.0
 }]
 
-[sub_resource type="Animation" id="Animation_a53p0"]
-resource_name = "fallingfromtree"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 18)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, -0.671952]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:self_modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(-0.0333333),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_nvwkb"]
+[sub_resource type="Animation" id="Animation_g2snr"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -97,7 +57,7 @@ tracks/2/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_g2snr"]
+[sub_resource type="Animation" id="Animation_7wuw0"]
 resource_name = "fade"
 length = 0.3
 tracks/0/type = "value"
@@ -107,10 +67,10 @@ tracks/0/path = NodePath("AnimatedSprite2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, 18)]
+"values": [Vector2(0, 18), Vector2(0, 18)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -119,10 +79,10 @@ tracks/1/path = NodePath("AnimatedSprite2D:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [-0.671952]
+"values": [-0.698132, -0.698132]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -131,17 +91,57 @@ tracks/2/path = NodePath("AnimatedSprite2D:self_modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(-0.0333333, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_nvwkb"]
+resource_name = "fall_from_tree"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 18)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -0.698132]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fcux7"]
 _data = {
-&"RESET": SubResource("Animation_nvwkb"),
-&"fade": SubResource("Animation_g2snr"),
-&"fallingfromtree": SubResource("Animation_a53p0")
+&"RESET": SubResource("Animation_g2snr"),
+&"fade": SubResource("Animation_7wuw0"),
+&"fall_from_tree": SubResource("Animation_nvwkb")
 }
 
 [node name="apple_collectible" type="StaticBody2D"]
