@@ -343,7 +343,7 @@ zoom = Vector2(3, 3)
 limit_left = -479
 limit_top = -359
 limit_right = 359
-limit_bottom = 279
+limit_bottom = 923
 
 [node name="Inv_UI" parent="." instance=ExtResource("4_dqkch")]
 anchors_preset = 8
