@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://dv6xxoe7yms3p"]
+
+[ext_resource type="Texture2D" uid="uid://bode6jbxbwqar" path="res://art/inventory_art/inventory-background.png" id="1_jwyou"]
+[ext_resource type="Script" uid="uid://b4u5ls783caf8" path="res://dialogue/dialogueplayer.gd" id="2_vigd0"]
+
+[node name="Dialogue" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_vigd0")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 0
+offset_left = -36.0
+offset_top = -75.0
+offset_right = 37.0
+offset_bottom = -14.0
+texture = ExtResource("1_jwyou")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+metadata/_edit_group_ = true
+
+[node name="name" type="RichTextLabel" parent="NinePatchRect"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 84.0
+offset_bottom = 27.0
+scale = Vector2(0.4, 0.4)
+text = "Name:"
+tab_size = 1
+
+[node name="text" type="RichTextLabel" parent="NinePatchRect"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 16.0
+offset_right = 165.0
+offset_bottom = 116.0
+scale = Vector2(0.4, 0.4)
+text = "chatting"
+tab_size = 1

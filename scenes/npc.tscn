@@ -1,6 +1,8 @@
-[gd_scene load_steps=23 format=3 uid="uid://013le0epwcl8"]
+[gd_scene load_steps=25 format=3 uid="uid://013le0epwcl8"]
 
 [ext_resource type="Texture2D" uid="uid://bybbg6vhxtb8n" path="res://art/character/Human-Worker-Red.png" id="1_nh2m4"]
+[ext_resource type="Script" uid="uid://o3an1uym8luv" path="res://scripts/npc.gd" id="1_rv78h"]
+[ext_resource type="PackedScene" uid="uid://dv6xxoe7yms3p" path="res://dialogue/dialogue.tscn" id="3_rv78h"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_abqhh"]
 atlas = ExtResource("1_nh2m4")
@@ -163,11 +165,12 @@ radius = 4.0
 radius = 27.1662
 
 [node name="npc" type="CharacterBody2D"]
+script = ExtResource("1_rv78h")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ca6vw")
 animation = &"idle"
-frame_progress = 0.229652
+frame_progress = 0.698251
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3)
@@ -180,3 +183,14 @@ shape = SubResource("CircleShape2D_d56e8")
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
+
+[node name="Dialogue" parent="." instance=ExtResource("3_rv78h")]
+offset_left = 1.0
+offset_top = 3.0
+offset_right = 41.0
+offset_bottom = 43.0
+
+[connection signal="body_entered" from="chat_detection_area" to="." method="_on_chat_detection_area_body_entered"]
+[connection signal="body_exited" from="chat_detection_area" to="." method="_on_chat_detection_area_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="d_finished" from="Dialogue" to="." method="_on_dialogue_d_finished"]
