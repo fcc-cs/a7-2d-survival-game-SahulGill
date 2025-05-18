@@ -30,12 +30,9 @@ func _physics_process(delta: float) -> void:
 	velocity = direction * speed 
 	move_and_slide()
 	
-	if Input.is_action_just_pressed("e"):
-		if bow_equipped:
-			bow_equipped = false
-		else:
-			bow_equipped = true
-	
+	if Input.is_action_just_pressed("f"):
+		bow_equipped = !bow_equipped
+
 	var mouse_position = get_global_mouse_position()
 	$Marker2D.look_at(mouse_position)
 	

@@ -1,7 +1,10 @@
 extends CharacterBody2D
 
+signal HealthChanged
+
 var speed = 50
-var health = 100
+@export var max_health = 100
+@onready var current_health: int = max_health
 
 var dead = false
 var player_in_area = false
@@ -12,6 +15,7 @@ var player
 
 
 func _ready() -> void:
+	emit_signal("HealthChanged")
 	dead = false
 
 
@@ -46,17 +50,19 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.has_method("arrow_deal_damage"):
 		damage = 50
 		take_damage(50)
+		emit_signal("HealthChanged")
 		
 func take_damage(damage):
 	
-	health -= damage
+	current_health -= damage
 	
 	if !dead:
-		if health <= 0:
+		if current_health <= 0:
 			death()
 
 func death():
 	dead = true
+	$HealthBar.visible = false
 	$AnimatedSprite2D.play("death")
 	await get_tree().create_timer(1).timeout
 	drop_slime()
