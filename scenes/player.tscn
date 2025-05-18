@@ -1,9 +1,18 @@
-[gd_scene load_steps=39 format=3 uid="uid://cjjqv5i80uqh4"]
+[gd_scene load_steps=43 format=3 uid="uid://cjjqv5i80uqh4"]
 
 [ext_resource type="Texture2D" uid="uid://bprtokwa3taee" path="res://art/character/survivalgame-player-green.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://rgsyp03cejxk" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Resource" uid="uid://55t870oc6clr" path="res://inventory/playerinv.tres" id="2_qhqgy"]
 [ext_resource type="PackedScene" uid="uid://dl1ps1abt70kr" path="res://inventory/inv_ui.tscn" id="4_dqkch"]
+[ext_resource type="PackedScene" uid="uid://bwtk34wbil41s" path="res://scenes/health_bar.tscn" id="5_qlg0r"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ke2ow"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(448, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_31cv2"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(480, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3vyb7"]
 atlas = ExtResource("1_3vyb7")
@@ -135,6 +144,17 @@ region = Rect2(96, 192, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_60mlk"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ke2ow")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_31cv2")
+}],
+"loop": true,
+"name": &"damage",
+"speed": 4.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3vyb7")
@@ -325,6 +345,9 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_tk41t"]
 radius = 4.12311
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_dqkch"]
+radius = 16.0312
+
 [node name="player" type="CharacterBody2D"]
 y_sort_enabled = true
 script = ExtResource("1_g2els")
@@ -332,7 +355,9 @@ inv = ExtResource("2_qhqgy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_60mlk")
-animation = &"w-attack"
+animation = &"death"
+frame = 5
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3)
@@ -344,6 +369,13 @@ limit_left = -479
 limit_top = -359
 limit_right = 359
 limit_bottom = 923
+
+[node name="HealthBar" parent="." node_paths=PackedStringArray("character") instance=ExtResource("5_qlg0r")]
+offset_left = -48.0
+offset_top = -32.0
+offset_right = 34.0
+offset_bottom = 15.0
+character = NodePath("..")
 
 [node name="Inv_UI" parent="." instance=ExtResource("4_dqkch")]
 anchors_preset = 8
@@ -359,3 +391,13 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Marker2D" type="Marker2D" parent="."]
+
+[node name="hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource("CircleShape2D_dqkch")
+
+[node name="regain_health" type="Timer" parent="."]
+
+[connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="timeout" from="regain_health" to="." method="_on_regain_health_timeout"]

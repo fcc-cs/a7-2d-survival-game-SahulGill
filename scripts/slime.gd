@@ -32,7 +32,8 @@ func _physics_process(delta: float) -> void:
 	else:
 		$"detection area/CollisionShape2D".disabled = true
 		
-
+func slime_attack():
+	pass
 
 func _on_detection_area_body_entered(body: Node2D) -> void:
 	if body.has_method("player"):
@@ -50,11 +51,11 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.has_method("arrow_deal_damage"):
 		damage = 50
 		take_damage(50)
-		emit_signal("HealthChanged")
 		
 func take_damage(damage):
 	
 	current_health -= damage
+	emit_signal("HealthChanged")
 	
 	if !dead:
 		if current_health <= 0:

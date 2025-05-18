@@ -4,6 +4,8 @@ signal stick_collected
 signal apple_collected
 signal slime_collected
 
+signal HealthChanged
+
 var speed = 100
 var player_state
 
@@ -17,36 +19,47 @@ var mouse_location_from_player = null
 
 @onready var camera = $Camera2D
 
+var dead = false
+
+var damage
+@export var max_health = 100
+@onready var current_health: int = max_health
+
+func _ready() -> void:
+	emit_signal("HealthChanged")
+
 func _physics_process(delta: float) -> void:
-	mouse_location_from_player = get_global_mouse_position() - self.position
+	
+	if !dead:
+		mouse_location_from_player = get_global_mouse_position() - self.position
 
-	var direction = Input.get_vector("left", "right", "up", "down")
-	
-	if direction.x == 0 and direction.y == 0:
-		player_state = "idle"
-	elif direction.x != 0 or direction.y != 0:
-		player_state = "walking"
+		var direction = Input.get_vector("left", "right", "up", "down")
 		
-	velocity = direction * speed 
-	move_and_slide()
-	
-	if Input.is_action_just_pressed("f"):
-		bow_equipped = !bow_equipped
+		if direction.x == 0 and direction.y == 0:
+			player_state = "idle"
+		elif direction.x != 0 or direction.y != 0:
+			player_state = "walking"
+			
+		velocity = direction * speed 
+		move_and_slide()
+		
+		if Input.is_action_just_pressed("f"):
+			bow_equipped = !bow_equipped
 
-	var mouse_position = get_global_mouse_position()
-	$Marker2D.look_at(mouse_position)
-	
-	if Input.is_action_just_pressed("left_mouse") and bow_equipped and bow_cooldown:
-		bow_cooldown = false
-		var arrow_instance = arrow.instantiate()
-		arrow_instance.rotation = $Marker2D.rotation
-		arrow_instance.global_position = $Marker2D.global_position
-		add_child(arrow_instance)
+		var mouse_position = get_global_mouse_position()
+		$Marker2D.look_at(mouse_position)
 		
-		await get_tree().create_timer(0.4).timeout
-		bow_cooldown = true
-		
-	player_anim(direction)
+		if Input.is_action_just_pressed("left_mouse") and bow_equipped and bow_cooldown:
+			bow_cooldown = false
+			var arrow_instance = arrow.instantiate()
+			arrow_instance.rotation = $Marker2D.rotation
+			arrow_instance.global_position = $Marker2D.global_position
+			add_child(arrow_instance)
+			
+			await get_tree().create_timer(0.4).timeout
+			bow_cooldown = true
+			
+		player_anim(direction)
 
 func player_anim(dir):
 	var anim_aprite = $AnimatedSprite2D
@@ -104,14 +117,44 @@ func player():
 	pass
 
 func collect(item):
-	inv.insert(item)
-	
-	if item.name == "stick":
-		emit_signal("stick_collected")
-	
-	if item.name == "slime": #slime
-		emit_signal("slime_collected")
+	if !dead:
+		inv.insert(item)
 		
-	if item.name == "apple": #apple
-		emit_signal("apple_collected")
+		if item.name == "stick":
+			emit_signal("stick_collected")
+		
+		if item.name == "slime": #slime
+			emit_signal("slime_collected")
+			
+		if item.name == "apple": #apple
+			emit_signal("apple_collected")
 	
+
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	if body.has_method("slime_attack"):
+		damage = 10
+		take_damage(damage)
+		
+
+func take_damage(damage):
+	current_health -= damage
+	emit_signal("HealthChanged")
+	
+	$regain_health.start(3)
+	
+	if current_health <= 0:
+		death()
+	
+	else:
+		$AnimatedSprite2D.play("damage")
+
+func death():
+	dead = true
+	$AnimatedSprite2D.play("death")
+	await get_tree().create_timer(3).timeout
+	
+
+
+func _on_regain_health_timeout() -> void:
+	current_health += 5
+	emit_signal("HealthChanged")
