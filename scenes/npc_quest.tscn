@@ -1,14 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://bb2ren2xmvi3o"]
+[gd_scene load_steps=3 format=3 uid="uid://bb2ren2xmvi3o"]
 
 [ext_resource type="Texture2D" uid="uid://bode6jbxbwqar" path="res://art/inventory_art/inventory-background.png" id="1_3yyw7"]
+[ext_resource type="Script" uid="uid://cmopstk18ihd" path="res://scripts/npc_quest.gd" id="1_yqrum"]
 
 [node name="NPC_Quest" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("1_yqrum")
 
 [node name="quest1_ui" type="NinePatchRect" parent="."]
+visible = false
+layout_mode = 0
 offset_left = -36.0
 offset_top = -75.0
 offset_right = 37.0
@@ -62,6 +66,7 @@ text = "no"
 
 [node name="no_quest" type="NinePatchRect" parent="."]
 visible = false
+layout_mode = 0
 offset_left = -36.0
 offset_top = -75.0
 offset_right = 37.0
@@ -95,6 +100,7 @@ tab_size = 1
 
 [node name="finished_quest" type="NinePatchRect" parent="."]
 visible = false
+layout_mode = 0
 offset_left = -36.0
 offset_top = -75.0
 offset_right = 37.0
@@ -125,3 +131,6 @@ offset_bottom = 116.0
 scale = Vector2(0.4, 0.4)
 text = "Good job! Come back later for more."
 tab_size = 1
+
+[connection signal="pressed" from="quest1_ui/yes" to="." method="_on_yes_pressed"]
+[connection signal="pressed" from="quest1_ui/no" to="." method="_on_no_pressed"]
