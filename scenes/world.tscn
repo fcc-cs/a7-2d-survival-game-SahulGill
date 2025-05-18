@@ -328,4 +328,37 @@ position = Vector2(-81, -206)
 [node name="npc" parent="." instance=ExtResource("10_w7kh3")]
 position = Vector2(-223, 24)
 
+[node name="slime4" parent="." instance=ExtResource("8_4mrxx")]
+position = Vector2(76, 862)
+
+[node name="slime5" parent="." instance=ExtResource("8_4mrxx")]
+position = Vector2(-247, 831)
+
+[node name="slime6" parent="." instance=ExtResource("8_4mrxx")]
+position = Vector2(-197, 736)
+
+[node name="slime7" parent="." instance=ExtResource("8_4mrxx")]
+position = Vector2(-36, 779)
+
+[node name="slime8" parent="." instance=ExtResource("8_4mrxx")]
+position = Vector2(80, 750)
+
+[node name="slime11" parent="." instance=ExtResource("8_4mrxx")]
+position = Vector2(72, 578)
+
+[node name="slime9" parent="." instance=ExtResource("8_4mrxx")]
+position = Vector2(-162, 477)
+
+[node name="slime14" parent="." instance=ExtResource("8_4mrxx")]
+position = Vector2(-5, 421)
+
+[node name="slime13" parent="." instance=ExtResource("8_4mrxx")]
+position = Vector2(-54, 350)
+
+[node name="slime12" parent="." instance=ExtResource("8_4mrxx")]
+position = Vector2(-3, 492)
+
+[node name="slime10" parent="." instance=ExtResource("8_4mrxx")]
+position = Vector2(-139, 659)
+
 [connection signal="stick_collected" from="player" to="npc" method="_on_player_stick_collected"]

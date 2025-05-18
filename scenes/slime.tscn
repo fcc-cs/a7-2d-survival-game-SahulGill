@@ -1,9 +1,10 @@
-[gd_scene load_steps=33 format=3 uid="uid://cqrf10mdlf0xg"]
+[gd_scene load_steps=34 format=3 uid="uid://cqrf10mdlf0xg"]
 
 [ext_resource type="Script" uid="uid://fsh0gx3bkjp2" path="res://scripts/slime.gd" id="1_p2gj0"]
 [ext_resource type="Texture2D" uid="uid://buqectauoxlf4" path="res://art/character/survivalgame-enemy-slime.png" id="2_n6pvg"]
 [ext_resource type="Resource" uid="uid://buwtfqra82mip" path="res://inventory/items/slime.tres" id="2_pjw23"]
 [ext_resource type="PackedScene" uid="uid://ci7k2gant8dr6" path="res://scenes/slime_collectible.tscn" id="3_n6pvg"]
+[ext_resource type="PackedScene" uid="uid://bwtk34wbil41s" path="res://scenes/health_bar.tscn" id="5_2npkn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pjw23"]
 atlas = ExtResource("2_n6pvg")
@@ -199,7 +200,7 @@ radius = 6.0
 radius = 51.4781
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pjw23"]
-radius = 422.601
+radius = 900.988
 
 [node name="slime" type="CharacterBody2D"]
 script = ExtResource("1_p2gj0")
@@ -233,6 +234,14 @@ visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="slime_collect_area"]
 shape = SubResource("CircleShape2D_pjw23")
+
+[node name="HealthBar" parent="." node_paths=PackedStringArray("character") instance=ExtResource("5_2npkn")]
+offset_left = -22.0
+offset_top = -25.0
+offset_right = 78.0
+offset_bottom = 75.0
+scale = Vector2(0.4, 0.4)
+character = NodePath("..")
 
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="detection area" to="." method="_on_detection_area_body_entered"]

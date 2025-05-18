@@ -1,7 +1,10 @@
 extends CharacterBody2D
 
+signal HealthChanged
+
 var speed = 50
-var health = 100
+@export var max_health = 100
+@onready var current_health: int = max_health
 
 var dead = false
 var player_in_area = false
@@ -12,6 +15,7 @@ var player
 
 
 func _ready() -> void:
+	emit_signal("HealthChanged")
 	dead = false
 
 
@@ -28,7 +32,8 @@ func _physics_process(delta: float) -> void:
 	else:
 		$"detection area/CollisionShape2D".disabled = true
 		
-
+func slime_attack():
+	pass
 
 func _on_detection_area_body_entered(body: Node2D) -> void:
 	if body.has_method("player"):
@@ -49,14 +54,16 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		
 func take_damage(damage):
 	
-	health -= damage
+	current_health -= damage
+	emit_signal("HealthChanged")
 	
 	if !dead:
-		if health <= 0:
+		if current_health <= 0:
 			death()
 
 func death():
 	dead = true
+	$HealthBar.visible = false
 	$AnimatedSprite2D.play("death")
 	await get_tree().create_timer(1).timeout
 	drop_slime()
